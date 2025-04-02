@@ -9,14 +9,13 @@ defineProps<{ restaurant: Restaurant }>()
 
 <template>
   <Card class="w-full max-w-md bg-pink-50 dark:bg-zinc-900 rounded-2xl p-5 m-4 shadow-sm hover:shadow-lg transition-all duration-200">
-    <!-- Header -->
+
     <CardHeader class="mb-3 p-0">
       <h2 class="text-lg font-semibold text-zinc-800 dark:text-white leading-tight">
         {{ restaurant.name }}
       </h2>
     </CardHeader>
 
-    <!-- Cuisines -->
     <CardContent class="p-0">
       <div class="flex flex-wrap gap-2 mb-3">
         <Button
@@ -29,14 +28,11 @@ defineProps<{ restaurant: Restaurant }>()
         </Button>
       </div>
 
-      <!-- Rating -->
       <div class="inline-flex items-center gap-1 px-2 py-1 bg-black text-white text-xs font-semibold rounded-full">
         <StarIcon class="w-4 h-4 text-yellow-400 fill-yellow-400" />
         <span>{{ restaurant.rating.starRating}}</span>
       </div>
-
-      <!-- Address -->
-      <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-snug">
+      <p class="text-sm text-zinc-600 dark:text-white leading-snug">
         {{ restaurant.address.firstLine }}, {{ restaurant.address.city }} {{ restaurant.address.postalCode }}
       </p>
     </CardContent>

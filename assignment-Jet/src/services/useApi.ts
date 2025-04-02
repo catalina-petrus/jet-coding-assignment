@@ -4,10 +4,8 @@ import type { Restaurant } from './types'
 
 
 export const useApi = () => {
-    const getRestaurants = async (): Promise<Restaurant[]> => {
-
-        const postcode = 'EC4M7RF'
-      const response = await http.get(`api/discovery/uk/restaurants/enriched/bypostcode/${postcode}`)
+    const getRestaurants = async (zipCode: string): Promise<Restaurant[]> => {
+      const response = await http.get(`api/discovery/uk/restaurants/enriched/bypostcode/${zipCode}`)
       const restaurants = response.data.restaurants
       console.log(response)
       console.log(restaurants)
