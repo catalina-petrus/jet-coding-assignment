@@ -1,35 +1,44 @@
 <script setup lang="ts">
 import type { Restaurant } from '../services/types'
 import { Card, CardHeader, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
+import Button from '../components/ui/button/Button.vue'
 import { StarIcon } from 'lucide-vue-next'
 
 defineProps<{ restaurant: Restaurant }>()
 </script>
+
 <template>
-    <Card class="w-full p-4 hover:shadow-xl transition">
-      <CardHeader>
-        <h2 class="text-xl font-semibold">{{ restaurant.name }}</h2>
-      </CardHeader>
-  
-      <CardContent>
-        <div class="flex flex-wrap gap-2 mb-2">
-          <Badge v-for="(cuisine, index) in restaurant.cuisines" :key="index" variant="outline">
-            {{ cuisine.name }}
-          </Badge>
-        </div>
-  
-        <div class="flex items-center gap-2 mb-1">
-          <StarIcon class="h-5 w-5 text-yellow-400" />
-          <span class="font-medium">{{ restaurant.rating.starRating }}</span>
-        </div>
-  
-        <p class="text-muted-foreground text-sm">
-          {{ restaurant.address.firstLine }}, {{ restaurant.address.city }} {{ restaurant.address.postalCode }}
-        </p>
-      </CardContent>
-    </Card>
-  </template>
-  
- 
-  
+  <Card class="w-full max-w-md bg-pink-50 dark:bg-zinc-900 rounded-2xl p-5 m-4 shadow-sm hover:shadow-lg transition-all duration-200">
+    <!-- Header -->
+    <CardHeader class="mb-3 p-0">
+      <h2 class="text-lg font-semibold text-zinc-800 dark:text-white leading-tight">
+        {{ restaurant.name }}
+      </h2>
+    </CardHeader>
+
+    <!-- Cuisines -->
+    <CardContent class="p-0">
+      <div class="flex flex-wrap gap-2 mb-3">
+        <Button
+          v-for="(cuisine, index) in restaurant.cuisines"
+          :key="index"
+          variant="outline"
+          class="text-xs rounded-full px-3 py-1 border-zinc-300 text-zinc-700 dark:text-zinc-100"
+        >
+          {{ cuisine.name }}
+        </Button>
+      </div>
+
+      <!-- Rating -->
+      <div class="inline-flex items-center gap-1 px-2 py-1 bg-black text-white text-xs font-semibold rounded-full">
+        <StarIcon class="w-4 h-4 text-yellow-400 fill-yellow-400" />
+        <span>{{ restaurant.rating.starRating}}</span>
+      </div>
+
+      <!-- Address -->
+      <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-snug">
+        {{ restaurant.address.firstLine }}, {{ restaurant.address.city }} {{ restaurant.address.postalCode }}
+      </p>
+    </CardContent>
+  </Card>
+</template>
