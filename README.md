@@ -10,7 +10,7 @@ This project is built using Vue.js, Tailwind CSS, and Shadcn/vue components(http
 Note: The incremental stages of the development(with all the important commits) can be found in the development branch.
 
 ##  Preview
-![Project Screenshot](src/assets/screenshot.jpg)
+![Project Screenshot](assignment-Jet\src\assets\screenshot.jpg)
 
 
 # Installation Instructions
