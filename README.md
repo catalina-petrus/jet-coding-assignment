@@ -9,7 +9,11 @@ This project is built using Vue.js, Tailwind CSS, and Shadcn/vue components(http
 
 Note: The incremental stages of the development(with all the important commits) can be found in the development branch.
 
-Installation Instructions
+##  Preview
+![Project Screenshot](src/assets/screenshot.jpg)
+
+
+# Installation Instructions
 
 1. Clone the repository
 ```
@@ -33,22 +37,31 @@ npm install
 npm install vue@^3.4.0
 npm install -D vite
 ```
-
+```
 # Tailwind CSS (styling)
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+```
 
+```
 # Axios (HTTP requests)
 npm install axios
+```
 
+```
 # ShadCN (UI components via shadcn/vue)
 npm install -D shadcn-vue @tailwindcss/forms class-variance-authority tailwind-variants
+```
 
+```
 # Lucide (for icons)
 npm install lucide-vue-next
+```
 
+```
 # TypeScript (if not already installed)
 npm install -D typescript
+```
 
 4. Usage
 
@@ -58,9 +71,9 @@ npm run dev
 ```
 
 
-**
-Contact
-**
+
+#Contact
+
 
 For any questions or inquiries, feel free to reach out to:
 
