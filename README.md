@@ -11,7 +11,13 @@ Note: The incremental stages of the development(with all the important commits) 
 
 ##  Preview
 ![Project Screenshot](assignment-Jet\src\assets\screenshot.jpg)
+![screenshot](https://github.com/user-attachments/assets/dcc50fc1-67a7-493d-bf50-e989fca9627d)
 
+Quick UX walkthrough:
+The app consists of only one Main Page. A step-by-step guide:
+1. At the top of the page, you'll see a field labeled “Enter UK ZIP Code.” Type in a valid UK postcode(e.g.DH4 5QZ) or select one from the suggested postcode buttons below the input. Click a postcode button for a quicker search.(they contain the codes in the assignment)
+2. Click the search icon to fetch restaurant data. The app will validate your postcode(red/green message).
+3. The first 10 matching restaurants will appear as cards.  Each card includes: Name, cuisines (shown as tags), star rating, clickable address(opens Google Maps)
 
 # Installation Instructions
 
