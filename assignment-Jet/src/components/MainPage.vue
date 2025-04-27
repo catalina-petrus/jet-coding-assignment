@@ -4,9 +4,8 @@ import { useApi } from '../services/useApi'
 import type { Restaurant } from '../services/types'
 import RestaurantCard from './RestaurantCard.vue'
 import NavigationBar from './NavigationBar.vue'
-
+import Button from '../components/ui/button/Button.vue'
 import { SearchIcon } from 'lucide-vue-next'
-
 
 const api = useApi()
 const restaurants = ref<Restaurant[]>([])
@@ -21,34 +20,35 @@ const suggestedPostcodes = [
   'NE9 7TY', 'EH1 1RE', 'G3 8AG', 'BT7 1NN'
 ]
 
+// UK postcode (taken from this site: https://ideal-postcodes.co.uk/guides/postcode-validation)
+const postcodeRegex = /^([A-Z]{1,2}[0-9][0-9A-Z]? ?[0-9][A-Z]{2})$/i
+const isValid = computed(() => postcodeRegex.test(zipCode.value))
+const showError = computed(() => touched.value && !isValid.value)
+const noResults = computed(() => restaurants.value.length === 0)
+
+
+const fetchRestaurants = async () => {
+  if (!isValid.value) return
+  try {
+    const data = await api.getRestaurants(zipCode.value)
+    restaurants.value = data
+    error.value = null
+  } catch (err) {
+    error.value = (err as Error).message
+    restaurants.value = []
+  }
+}
+
 const setCodeAndSearch = async (postcode: string) => {
   zipCode.value = postcode
   touched.value = true
   await fetchRestaurants()
 }
 
-// UK postcode (taken from this site: https://ideal-postcodes.co.uk/guides/postcode-validation)
-const postcodeRegex = /^([A-Z]{1,2}[0-9][0-9A-Z]? ?[0-9][A-Z]{2})$/i
-const isValid = computed(() => postcodeRegex.test(zipCode.value))
-const showError = computed(() => touched.value && !isValid.value)
-
 onMounted(async () => {
-  try {
-    restaurants.value = await api.getRestaurants(zipCode.value)
-  } catch (err) {
-    error.value = (err as Error).message
-  }
+  touched.value = true
+  await fetchRestaurants()
 })
-
-//  fetch restaurants by postcode
-const fetchRestaurants = async () => {
-  if (!isValid.value) return
-  try {
-    restaurants.value = await api.getRestaurants(zipCode.value)
-  } catch (err) {
-    error.value = (err as Error).message
-  }
-}
 </script>
 
 <template>
@@ -64,12 +64,11 @@ const fetchRestaurants = async () => {
         id="zipcode"
         v-model="zipCode"
         @blur="touched = true"
+        @keyup.enter="fetchRestaurants"
         type="text"
         placeholder="e.g. DH45QZ"
-        class="w-full pr-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
-               dark:bg-zinc-800 dark:text-white dark:border-zinc-600"
+        class="w-full pr-10 px-4 py-2 border rounded-lg dark:bg-zinc-800 dark:text-white dark:border-zinc-600"
       />
-
       <SearchIcon
         @click="fetchRestaurants"
         class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-zinc-500 hover:text-blue-600 cursor-pointer"
@@ -89,8 +88,12 @@ const fetchRestaurants = async () => {
         {{ postcode }}
       </Button>
     </div>
-    
-    <div class="grid m-4 p-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <div class="mt-4">
+      <p v-if="noResults" class="text-gray-600 text-sm">No restaurants found for {{ zipCode }}.</p>
+    </div>
+
+    <div v-if="restaurants.length" class="grid m-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <RestaurantCard
         v-for="(restaurant, index) in restaurants"
         :key="index"
